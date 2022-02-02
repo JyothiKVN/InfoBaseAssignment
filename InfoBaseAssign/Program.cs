@@ -13,11 +13,12 @@ namespace InfoBaseAssign
         {
             DateTime strTime = DateTime.Now;
             Console.Write("Started at: "+ strTime+"\n");
-            string file = @"D:\source\repos\words.txt";
-            string uniques = @"D:\source\repos\uniques.txt";
-            string fullwords = @"D:\source\repos\fullwords.txt";
-            string[] unique = {"a"};
-            string[] fullword = { "b" }; 
+            string Sourcepath = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName;
+            string file = Path.Combine(Sourcepath,"words.txt");
+            string uniques = Path.Combine(Sourcepath, "uniques.txt");
+            string fullwords = Path.Combine(Sourcepath, "fullwords.txt");
+            string[] unique = null;
+            string[] fullword = null;
              
             #region Reading file
             if (File.Exists(file))
@@ -33,7 +34,7 @@ namespace InfoBaseAssign
                         if (list.Contains(temp))
                         { 
                             list.Remove(temp); 
-                            finallst.Remove(a => a.Key.Equals(temp));
+                            finallst.RemoveAll(a => a.Key.Equals(temp));
                         }
                         else
                         {
@@ -44,7 +45,7 @@ namespace InfoBaseAssign
                 }
                 list.Sort();
                 finallst = finallst.OrderBy(a => a.Key).ToList();
-                
+
                 unique = list.ToArray();                
                 fullword = finallst.Select(a=> a.Value).ToArray(); 
             }
